@@ -1,5 +1,6 @@
 package org.woodbridgehigh.healthid;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,15 +13,22 @@ import android.view.View;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
+import org.woodbridgehigh.healthid.models.Patient;
+
 public class MainActivity extends AppCompatActivity {
 	public static final String TAG = "HealthId";
+	public static final String PATIENT_EXTRA = "patientExtra";
 	private CaptureManager capture;
 	private DecoratedBarcodeView barcodeScannerView;
 	private FloatingActionButton toggleFlash;
 	private boolean flashOn = false;
+	private HealthIdApi api;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(api == null) {
+			api = new HealthIdApi(this);
+		}
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -54,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-						.setAction("Action", null).show();
+				//TODO: FIX
+				Intent intent = new Intent(MainActivity.this, DisplayActivity.class); //SHOULD BE CREATEACTIVITY
+				startActivity(intent);
 			}
 		});
 

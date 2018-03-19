@@ -23,7 +23,11 @@
         <activity
             android:name=".PrintActivity"
             android:label="@string/title_activity_print"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -35,13 +39,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateActivity"
-            android:label="@string/title_activity_create"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".DisplayActivity"
             android:label="@string/title_activity_display"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.woodbridgehigh.healthid.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
