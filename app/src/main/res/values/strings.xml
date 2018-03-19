@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Health ID</string>
+    <string name="title_activity_print">PrintActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_display">DisplayActivity</string>
+</resources>
