@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 				.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 	}
 	public void switchFlashlight() {
-		Log.d(TAG, "HODSLFKSJ:DFSD");
 		if (flashOn) {
 			barcodeScannerView.setTorchOff();
 		}
