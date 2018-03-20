@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				//TODO: FIX
-				Intent intent = new Intent(MainActivity.this, DisplayActivity.class); //SHOULD BE CREATEACTIVITY
-				startActivity(intent);
+				//Intent intent = new Intent(MainActivity.this, DisplayActivity.class); //SHOULD BE CREATEACTIVITY
+				//startActivity(intent);
 			}
 		});
 

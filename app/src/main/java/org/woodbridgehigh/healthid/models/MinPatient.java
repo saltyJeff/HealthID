@@ -11,7 +11,7 @@ public class MinPatient {
 	public List<MinPerson> e = new ArrayList<>();
 	public static MinPatient fromPatient(Patient from) {
 		MinPatient to = new MinPatient();
-		to.s = from.self.get();
+		to.s = from.self;
 		for(Person p : from.contacts) {
 			to.e.add(MinPerson.fromPerson(p));
 		}

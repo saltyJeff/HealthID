@@ -9,14 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
-	public final ObservableField<Person> self = new ObservableField<>();
-	public final ObservableList<Person> contacts = new ObservableArrayList<>();
-	public Patient () {
-		self.set(new Person());
-	}
+	public Person self = new Person();
+	public List<Person> contacts = new ArrayList<>();
 	public static Patient fromMinPatient(MinPatient from) {
 		Patient to = new Patient();
-		to.self.set(from.s);
+		to.self = from.s;
 		for(MinPerson p : from.e) {
 			to.contacts.add(Person.fromMinPerson(p));
 		}

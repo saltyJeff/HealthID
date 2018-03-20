@@ -5,8 +5,8 @@ public class MinPerson {
 	public String p;
 	public static MinPerson fromPerson(Person from) {
 		MinPerson to = new MinPerson();
-		to.n = from.name.get();
-		to.p = from.phone.get();
+		to.n = from.name;
+		to.p = from.phone;
 		return to;
 	}
 }
