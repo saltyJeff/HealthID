@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0px;
+                padding: 0px;
+            }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+    </head>
+    <body>
+        <app-display />
+        <script src="./riot.min.js"></script>
+        <script src="./bundle.js"></script>
+        <script>
+            window.patient = {
+                self: {
+                    name: 'John Doe',
+                    phone: "(123) 456-7890"
+                },
+                contacts: [
+                    {
+                        name: 'Jane Doe',
+                        phone: "(123) 123-1234"
+                    },
+                    {
+                        name: 'Jim Doe',
+                        phone: "(420) 420-6969"
+                    },
+                ]
+            }
+            riot.mount('*');
+        </script>
+    </body>
+</html>
