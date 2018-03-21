@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "riot -w ./src ../app/src/main/assets/bundle.js"
+    "build": "riot -w ./src ../app/src/main/assets/bundle.js",
+    "start": "live-server ../app/src/main/assets/"
   },
   "author": "",
   "license": "UNLICENSED",
