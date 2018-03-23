@@ -1,7 +1,3 @@
-require('./person-view.tag');
-require('./contacts-view.tag');
-require('./conditions-view.tag');
-require('./info-view.tag');
 <app-view>
     <style>
         app-view {
@@ -71,7 +67,6 @@ require('./info-view.tag');
     </ul>
     <script>
         var self = this;
-        var patientcoder = require('../patientcoder');
         var selected;
         route (e) {
             if(selected) {

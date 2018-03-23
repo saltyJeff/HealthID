@@ -1,4 +1,3 @@
-require('./person-edit.tag');
 <contacts-edit>
     <style>
         div.person {

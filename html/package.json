@@ -11,15 +11,11 @@
   "author": "",
   "license": "UNLICENSED",
   "devDependencies": {
-    "riot-hot-reload": "^1.0.0",
-    "riot-tag-loader": "^2.0.2",
     "webpack": "^4.2.0",
-    "webpack-cli": "^2.0.13",
-    "webpack-dev-server": "^3.1.1"
+    "webpack-cli": "^2.0.13"
   },
   "dependencies": {
     "base64-js": "^1.2.3",
-    "compressjs": "https://github.com/Faithlife/compressjs.git#13f8cb1ea411ff5f60e8a1621401baac9add4ee9",
-    "riot": "^3.9.0"
+    "compressjs": "https://github.com/Faithlife/compressjs.git#13f8cb1ea411ff5f60e8a1621401baac9add4ee9"
   }
 }

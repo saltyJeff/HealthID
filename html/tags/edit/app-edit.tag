@@ -1,7 +1,3 @@
-require('./person-edit.tag');
-require('./contacts-edit.tag');
-require('./conditions-edit.tag');
-require('./info-edit.tag');
 <app-edit>
     <style>
         app-edit {
@@ -80,7 +76,6 @@ require('./info-edit.tag');
     </ul>
     <script>
         var self = this;
-        var patientcoder = require('../patientcoder');
         var selected;
         route (e) {
             if(selected) {
