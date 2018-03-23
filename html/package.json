@@ -5,13 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "riot -w ./src ../app/src/main/assets/bundle.js",
-    "start": "live-server ../app/src/main/assets/"
+    "dev": "webpack-dev-server --mode development",
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "UNLICENSED",
   "devDependencies": {
-    "babel-preset-preact": "^1.1.0",
     "riot-hot-reload": "^1.0.0",
     "riot-tag-loader": "^2.0.2",
     "webpack": "^4.2.0",
@@ -19,6 +18,8 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
+    "base64-js": "^1.2.3",
+    "compressjs": "github:whsc3/compressjs",
     "riot": "^3.9.0"
   }
 }

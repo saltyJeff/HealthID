@@ -1,11 +1,12 @@
-require('./person-view.tag');
-require('./contacts-view.tag');
-<app-display>
+require('./person-edit.tag');
+require('./contacts-edit.tag');
+require('./conditions-edit.tag');
+require('./info-edit.tag');
+<app-edit>
     <style>
-        app-display {
+        app-edit {
             width: 100%;
             height: 100%;
-            position: relative;
             flex-direction: column;
             display: flex;
             overflow: hidden;
@@ -15,6 +16,9 @@ require('./contacts-view.tag');
             background-color: lightgrey;
             padding-left: 20px;
             overflow: auto;
+            position: relative;
+            top: 0px;
+            left: 0px;
         }
         #content > * {
             display: none;
@@ -47,6 +51,12 @@ require('./contacts-view.tag');
             color: white;
             text-align: center;            
         }
+        li > button {
+            display: block;
+            width: 80px;;
+            height: 100%;
+            text-align: center;
+        }
         .selectedButton {
             background-color: lightblue;
             border-top: 1px solid red;
@@ -54,17 +64,23 @@ require('./contacts-view.tag');
         }
     </style>
     <div id="content">
-        <person-view id="self" person={patient.self} />
-        <contacts-view id="contacts" people={patient.contacts} />
+        <person-edit id="self" person={patient.self} />
+        <contacts-edit id="contacts" people={patient.contacts} />
+        <conditions-edit id="conditions" conditions={patient.conditions} />
+        <info-edit id="info" patient={patient} /> <!--Need object reference for dynamic edits-->
     </div>
     <ul>
         <span class="spacer"/>
         <li><a onclick={route} id="selfButton">Self</a></li>
         <li><a onclick={route} id="contactsButton">Contacts</a></li>
+        <li><a onclick={route} id="conditionsButton">Conditions</a></li>
+        <li><a onclick={route} id="infoButton">Info</a></li>
         <span class="spacer"/>
+        <li><button onclick={submitPatient}>=&gt;</button></li>
     </ul>
     <script>
         var self = this;
+        var patientcoder = require('../patientcoder');
         var selected;
         route (e) {
             if(selected) {
@@ -78,26 +94,32 @@ require('./contacts-view.tag');
         }
         self.on('mount', function () {
             document.getElementById('selfButton').click();
-            self.patient = parsePatient() || {
-                self: {
-                    name: "Bob bob",
-                    phone: "1234567890"
-                },
-                contacts: [
-                    {
-                        name: "Jim jim",
-                        phone: "1237894560"
-                    },
-                    {
-                        name: "Joe joe",
-                        phone: "1231231234"
-                    }
-                ]
-            };
             self.update();
         });
-        function parsePatient(s) {
-
+         self.patient = {
+            self: {
+                name: "Bob bob",
+                phone: "1234567890"
+            },
+            contacts: [
+                {
+                    name: "Jim jim",
+                    phone: "1237894560"
+                },
+                {
+                    name: "Joe joe",
+                    phone: "1231231234"
+                }
+            ],
+            conditions: [
+                "peanut allergy",
+                "addiction to dank memes"
+            ],
+            info: "my favorite pie tastes like pumpkins"
+        };
+        submitPatient () {
+            var str = patientcoder.makeString(self.patient);
+            Android.submitPatient(str);
         }
     </script>
-</app-display>
+</app-edit>

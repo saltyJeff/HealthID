@@ -3,6 +3,7 @@ module.exports = {
 	entry: "./src/index.js",
 	output: {
 		path: __dirname,
+		publicPath: __dirname,
 		filename: "bundle.js"
 	},
 	module: {
@@ -14,7 +15,7 @@ module.exports = {
 					hot: true
 				}
 			}
-		}]	
+		}]
 	},
 	plugins: [
 		new webpack.NamedModulesPlugin(),

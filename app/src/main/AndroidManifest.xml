@@ -9,7 +9,8 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +27,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activity_BluetoothPrinterList"
+            android:label="@string/title_activity_print"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PrintActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
@@ -45,7 +54,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.woodbridgehigh.healthid.MainActivity" />
-        </activity>        
+        </activity>
+        <activity
+            android:name=".CreateActivity"
+            android:label="@string/title_activity_create"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.woodbridgehigh.healthid.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -9,26 +9,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import org.woodbridgehigh.healthid.models.Patient;
 
 public class MainActivity extends AppCompatActivity {
-	public static final String TAG = "HealthId";
+	public static final String TAG = "MAIN_ACTIVITY";
 	public static final String PATIENT_EXTRA = "patientExtra";
 	private CaptureManager capture;
 	private DecoratedBarcodeView barcodeScannerView;
 	private FloatingActionButton toggleFlash;
 	private boolean flashOn = false;
-	private HealthIdApi api;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(api == null) {
-			api = new HealthIdApi(this);
-		}
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -62,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				//TODO: FIX
-				//Intent intent = new Intent(MainActivity.this, DisplayActivity.class); //SHOULD BE CREATEACTIVITY
-				//startActivity(intent);
+				Intent intent = new Intent(MainActivity.this, CreateActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -106,5 +104,20 @@ public class MainActivity extends AppCompatActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		capture.onSaveInstanceState(outState);
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+		if(result != null) {
+			if(result.getContents() == null) {
+				Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+			} else {
+				Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+				intent.putExtra(PATIENT_EXTRA, result.getContents());
+				startActivity(intent);
+			}
+		} else {
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	}
 }
