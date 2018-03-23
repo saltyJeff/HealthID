@@ -11,7 +11,14 @@
   "author": "",
   "license": "UNLICENSED",
   "devDependencies": {
-    "babel-preset-preact": "^1.1.0"
+    "babel-preset-preact": "^1.1.0",
+    "riot-hot-reload": "^1.0.0",
+    "riot-tag-loader": "^2.0.2",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.1.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "riot": "^3.9.0"
+  }
 }

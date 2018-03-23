@@ -13,6 +13,7 @@ import org.woodbridgehigh.healthid.models.Patient;
 public class PersonBmpCoder {
 	private static Gson gson = new GsonBuilder().create();
 	public static Bitmap patientToTextBmp(Patient patient) {
+
 		return null;
 	}
 	public static Bitmap patientToAztecBmp(Patient patient) {
