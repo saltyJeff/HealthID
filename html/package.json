@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "base64-js": "^1.2.3",
-    "compressjs": "github:whsc3/compressjs",
+    "compressjs": "https://github.com/Faithlife/compressjs.git#13f8cb1ea411ff5f60e8a1621401baac9add4ee9",
     "riot": "^3.9.0"
   }
 }

@@ -12,13 +12,10 @@ module.exports = {
 			use: {
 				loader: "riot-tag-loader",
 				options: {
-					hot: true
+					hot: false
 				}
 			}
 		}]
 	},
-	plugins: [
-		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin()
-	]
+	devtool: 'source-map'
 }
