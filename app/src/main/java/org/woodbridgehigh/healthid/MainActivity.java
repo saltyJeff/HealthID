@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
-
+		new IntentIntegrator(this).initiateScan();
 		capture = new CaptureManager(this, barcodeScannerView);
 		capture.initializeFromIntent(getIntent(), savedInstanceState);
 		capture.decode();
@@ -111,12 +111,15 @@ public class MainActivity extends AppCompatActivity {
 		if(result != null) {
 			if(result.getContents() == null) {
 				Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-			} else {
+			}
+			else {
 				Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
 				intent.putExtra(PATIENT_EXTRA, result.getContents());
+				Log.w(TAG, result.getContents());
 				startActivity(intent);
 			}
-		} else {
+		}
+		else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}

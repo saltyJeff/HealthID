@@ -38,8 +38,12 @@ public class ImagePrint extends BasePrint {
      */
     @Override
     protected void doPrint() {
-        mPrinter.printImage(mText);
-        mPrinter.printImage(mAztec);
+        if(mText != null) {
+            mPrinter.printImage(mText);
+        }
+        if(mAztec != null) {
+            mPrinter.printImage(mAztec);
+        }
     }
 
 }

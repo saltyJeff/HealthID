@@ -14,7 +14,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 public class JsInterface {
 	private Activity activity;
 	public static final String TEXT_BMP_EXTRA = "textBmp";
-	public static final String AZTEC_BMP_EXTRA = "aztecBmp";
+	public static final String CODE_BMP_EXTRA = "qrBmp";
 	public static final String TAG = "JS";
 	public JsInterface(Activity a) {
 		activity = a;
@@ -25,9 +25,11 @@ public class JsInterface {
 		Log.i(TAG, "printing out: "+fullPath);
 		try {
 			BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-			Bitmap bitmap = barcodeEncoder.encodeBitmap(fullPath, BarcodeFormat.AZTEC, 300, 300);
+			Bitmap qrBmp = barcodeEncoder.encodeBitmap(fullPath, BarcodeFormat.QR_CODE, 300, 300);
+			Bitmap textBmp = null;
 			Intent intent = new Intent(activity, PrintActivity.class);
-			intent.putExtra(AZTEC_BMP_EXTRA, bitmap);
+			intent.putExtra(CODE_BMP_EXTRA, qrBmp);
+			intent.putExtra(TEXT_BMP_EXTRA, textBmp);
 			activity.startActivity(intent);
 		}
 		catch(WriterException e) {
