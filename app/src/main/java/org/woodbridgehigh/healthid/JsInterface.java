@@ -20,8 +20,8 @@ public class JsInterface {
 		activity = a;
 	}
 	@JavascriptInterface
-	public void submitPatient(String msg) {
-		String fullPath = "https://saltyJeff.github.io/display.html?"+msg;
+	public void submitPatient(String msg, String patientStr) {
+		String fullPath = "https://saltyJeff.github.io/HealthID/display.html?"+msg;
 		Log.i(TAG, "printing out: "+fullPath);
 		try {
 			BarcodeEncoder barcodeEncoder = new BarcodeEncoder();

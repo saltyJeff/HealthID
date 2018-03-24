@@ -1,3 +1,3 @@
 <contacts-view>
-    <person-view each={opts.people} person={this}/> 
+	<person-view each={opts.people} person={this}/> 
 </contacts-view>

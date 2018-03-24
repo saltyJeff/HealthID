@@ -17,7 +17,7 @@ riot.tag2('app-edit', '<div id="content"> <person-edit id="self" person="{patien
         });
          self.patient = {
             self: {
-                name: "Bob bob",
+                name: "John Doe",
                 phone: "1234567890"
             },
             contacts: [
@@ -32,12 +32,14 @@ riot.tag2('app-edit', '<div id="content"> <person-edit id="self" person="{patien
             ],
             conditions: [
                 "peanut allergy",
-                "addiction to dank memes"
+                "blood type AB+",
+                "history of heart attacks"
             ],
-            info: "my favorite pie tastes like pumpkins"
+            info: "Keeps epipen in backpack"
         };
         this.submitPatient = function () {
-            var str = patientcoder.makeString(self.patient);
+            var patientStr = JSON.stringify(self.patient);
+            var str = patientcoder.makeString(patientStr);
             Android.submitPatient(str);
         }.bind(this)
 });
@@ -66,7 +68,7 @@ riot.tag2('contacts-edit', '<div each="{person, index in opts.people}" class="pe
             }
         }.bind(this)
 });
-riot.tag2('info-edit', '<div> <textarea style="width: 80%; height: 500px;" onkeypress="{handleInput}" riot-value="{opts.patient.info}"></textarea> </div>', '', '', function(opts) {
+riot.tag2('info-edit', '<div> <textarea style="width: 80%; height: 500px;" oninput="{handleInput}" riot-value="{opts.patient.info}"></textarea> </div>', '', '', function(opts) {
 		var self = this;
 		this.handleInput = function(e) {
 			self.opts.patient.info = e.target.value;
@@ -102,9 +104,7 @@ riot.tag2('app-view', '<div id="content"> <person-view id="self" person="{patien
         }.bind(this)
         self.on('mount', function () {
             document.getElementById('selfButton').click();
-            self.update();
-        });
-        self.patient = parsePatient(window.location.href) || {
+            self.patient = parsePatient(window.location.href) || {
                 self: {
                     name: "Bob bob",
                     phone: "1234567890"
@@ -124,10 +124,14 @@ riot.tag2('app-view', '<div id="content"> <person-view id="self" person="{patien
                     "addiction to dank memes"
                 ],
                 info: "my favorite pie tastes like pumpkins"
-        };
+            };
+            self.patient = JSON.parse(self.patient);
+            console.log("TYPEOF: "+(typeof self.patient));
+            self.update();
+        });
         function parsePatient(href) {
             var questionIdx = href.indexOf('?');
-            var strOfInterest = href.substring(questionIdx);
+            var strOfInterest = href.substring(questionIdx+1);
             if(questionIdx == -1 || !strOfInterest) {
                 return undefined;
             }

@@ -4,27 +4,29 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.CaptureManager;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.ResultPoint;
+import com.google.zxing.client.android.BeepManager;
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
-import org.woodbridgehigh.healthid.models.Patient;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 	public static final String TAG = "MAIN_ACTIVITY";
 	public static final String PATIENT_EXTRA = "patientExtra";
-	private CaptureManager capture;
 	private DecoratedBarcodeView barcodeScannerView;
 	private FloatingActionButton toggleFlash;
 	private boolean flashOn = false;
+	private BeepManager beepManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,10 +67,22 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
-		new IntentIntegrator(this).initiateScan();
-		capture = new CaptureManager(this, barcodeScannerView);
-		capture.initializeFromIntent(getIntent(), savedInstanceState);
-		capture.decode();
+		//barcode stuff
+		List<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE);
+		barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
+		beepManager = new BeepManager(this);
+		barcodeScannerView.decodeContinuous(new BarcodeCallback() {
+			@Override
+			public void barcodeResult(BarcodeResult result) {
+				Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+				intent.putExtra(PATIENT_EXTRA, result.getText());
+				Log.w(TAG, result.getText());
+				startActivity(intent);
+			}
+
+			@Override
+			public void possibleResultPoints(List<ResultPoint> resultPoints) {}
+		});
 	}
 	private boolean hasFlash() {
 		return getApplicationContext().getPackageManager()
@@ -85,42 +99,12 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		capture.onResume();
+		barcodeScannerView.resume();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		capture.onPause();
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		capture.onDestroy();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		capture.onSaveInstanceState(outState);
-	}
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-		if(result != null) {
-			if(result.getContents() == null) {
-				Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-			}
-			else {
-				Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
-				intent.putExtra(PATIENT_EXTRA, result.getContents());
-				Log.w(TAG, result.getContents());
-				startActivity(intent);
-			}
-		}
-		else {
-			super.onActivityResult(requestCode, resultCode, data);
-		}
+		barcodeScannerView.pause();
 	}
 }

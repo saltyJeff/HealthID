@@ -93,7 +93,7 @@
         });
          self.patient = {
             self: {
-                name: "Bob bob",
+                name: "John Doe",
                 phone: "1234567890"
             },
             contacts: [
@@ -108,13 +108,15 @@
             ],
             conditions: [
                 "peanut allergy",
-                "addiction to dank memes"
+                "blood type AB+",
+                "history of heart attacks"
             ],
-            info: "my favorite pie tastes like pumpkins"
+            info: "Keeps epipen in backpack"
         };
         submitPatient () {
-            var str = patientcoder.makeString(self.patient);
-            Android.submitPatient(str);
+            var patientStr = JSON.stringify(self.patient);
+            var str = patientcoder.makeString(patientStr);
+            Android.submitPatient(str, patientStr);
         }
     </script>
 </app-edit>
