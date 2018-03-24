@@ -79,7 +79,6 @@
             document.getElementById(selected).style.display = "block";
         }
         self.on('mount', function () {
-            document.getElementById('selfButton').click();
             self.patient = parsePatient(window.location.href) || {
                 self: {
                     name: "Bob bob",
@@ -101,9 +100,11 @@
                 ],
                 info: "my favorite pie tastes like pumpkins"
             };
-            self.patient = JSON.parse(self.patient);
-            console.log("TYPEOF: "+(typeof self.patient));
+            console.log(self.patient);
+            //self.patient = JSON.parse(self.patient);
+            //console.log("TYPEOF: "+(typeof self.patient));
             self.update();
+            document.getElementById('selfButton').click();
         });
         function parsePatient(href) {
             var questionIdx = href.indexOf('?');

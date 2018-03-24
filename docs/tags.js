@@ -40,7 +40,7 @@ riot.tag2('app-edit', '<div id="content"> <person-edit id="self" person="{patien
         this.submitPatient = function () {
             var patientStr = JSON.stringify(self.patient);
             var str = patientcoder.makeString(patientStr);
-            Android.submitPatient(str);
+            Android.submitPatient(str, patientStr);
         }.bind(this)
 });
 riot.tag2('conditions-edit', '<div each="{name, i in opts.conditions}" class="condition"> <input type="text" riot-value="{name}"> <button class="del" onclick="{delCondition(i)}">X</button> </div> <button onclick="{addCondition}" class="add">+</button>', 'conditions-edit div.condition,[data-is="conditions-edit"] div.condition{ display: flex; flex-direction: row; } conditions-edit button.add,[data-is="conditions-edit"] button.add{ position: absolute; bottom: 40px; right: 40px; width: 80px; height: 80px; }', '', function(opts) {
@@ -103,7 +103,6 @@ riot.tag2('app-view', '<div id="content"> <person-view id="self" person="{patien
             document.getElementById(selected).style.display = "block";
         }.bind(this)
         self.on('mount', function () {
-            document.getElementById('selfButton').click();
             self.patient = parsePatient(window.location.href) || {
                 self: {
                     name: "Bob bob",
@@ -125,9 +124,10 @@ riot.tag2('app-view', '<div id="content"> <person-view id="self" person="{patien
                 ],
                 info: "my favorite pie tastes like pumpkins"
             };
-            self.patient = JSON.parse(self.patient);
-            console.log("TYPEOF: "+(typeof self.patient));
+            console.log(self.patient);
+
             self.update();
+            document.getElementById('selfButton').click();
         });
         function parsePatient(href) {
             var questionIdx = href.indexOf('?');
