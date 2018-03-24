@@ -45,10 +45,9 @@ import org.woodbridgehigh.healthid.printprocess.MsgHandle;
 
 
 public class PrintActivity extends AppCompatActivity {
-	Bitmap textBitmap,aztecBitmap;
+	Bitmap textBitmap,qrBitmap;
 	BasePrint imagePrint;
 	MsgHandle mHandle;
-	FloatingActionButton fab;
 	Button printButton;
 	MsgDialog mDialog;
 	public static final String TAG = "PrintActivity";
@@ -58,18 +57,27 @@ public class PrintActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_print);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		ImageView textImgView = findViewById(R.id.text_bmp);
+		ImageView qrImgView = findViewById(R.id.qr_bmp);
+		Log.w(TAG, "entering print activity");
 		textBitmap = (Bitmap) getIntent().getParcelableExtra(JsInterface.TEXT_BMP_EXTRA);
-		aztecBitmap = (Bitmap) getIntent().getParcelableExtra(JsInterface.CODE_BMP_EXTRA);
+		qrBitmap = (Bitmap) getIntent().getParcelableExtra(JsInterface.CODE_BMP_EXTRA);
 		if (textBitmap == null){
-			Log.e(TAG, "Text bitmap not found");
+			Snackbar.make(textImgView, "Text bitmap not found", Snackbar.LENGTH_LONG).show();
 		}
-		if (aztecBitmap == null){
-			Log.e(TAG,"Aztec bitmap not found");
+		else {
+			textImgView.setImageBitmap(textBitmap);
+			textImgView.setScaleX(2);
+			textImgView.setScaleY(2);
 		}
-		ImageView imageView = findViewById(R.id.imageView);
-		imageView.setImageBitmap(aztecBitmap);
-		imageView.setScaleX(5);
-		imageView.setScaleY(5);
+		if (qrBitmap == null){
+			Snackbar.make(qrImgView, "QR bitmap not found", Snackbar.LENGTH_LONG).show();
+		}
+		else {
+			qrImgView.setImageBitmap(qrBitmap);
+			qrImgView.setScaleX(2);
+			qrImgView.setScaleY(2);
+		}
 		Button connectButton = findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -98,25 +106,24 @@ public class PrintActivity extends AppCompatActivity {
 		imagePrint.setBluetoothAdapter(bluetoothAdapter);
 	}
 	private void printImages() {
-		((ImagePrint)(imagePrint)).setFiles(textBitmap, aztecBitmap);
+		((ImagePrint)(imagePrint)).setFiles(textBitmap, qrBitmap);
 		if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
 			Log.e("PrintActivity", "Permision not granted");
 			ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-		} else {
-			((ImagePrint)(imagePrint)).setFiles(aztecBitmap , textBitmap);
+		}
+		else {
+			((ImagePrint)(imagePrint)).setFiles(qrBitmap , textBitmap);
 			imagePrint.print();
 		}
 	}
 	public void attemptConnection(){
 		startActivityForResult( new Intent(this, Activity_BluetoothPrinterList.class),1);
-//		imagePrint.getPrinterStatus();
 	}
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		if (requestCode == 1)
 			if (resultCode == Activity.RESULT_OK){
 				imagePrint.setPrinterInfo(data.getStringExtra(Activity_BluetoothPrinterList.IP_EXTRA) , data.getStringExtra(Activity_BluetoothPrinterList.MAC_ADDRESS_EXTRA), data.getStringExtra(Activity_BluetoothPrinterList.PRINTER_EXTRA));
 				imagePrint.getPrinterStatus();
-//				fab.setEnabled(true);
 				printButton.setEnabled(true);
 			}
 	}
@@ -132,8 +139,6 @@ public class PrintActivity extends AppCompatActivity {
 		return bluetoothAdapter;
 	}
 	private void sendFile() {
-
-
 		SendFileThread getTread = new SendFileThread();
 		getTread.start();
 	}

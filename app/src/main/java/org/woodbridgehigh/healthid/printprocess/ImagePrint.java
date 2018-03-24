@@ -8,13 +8,15 @@ package org.woodbridgehigh.healthid.printprocess;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ImagePrint extends BasePrint {
 
     private Bitmap mText;
-    private Bitmap mAztec;
+    private Bitmap mQr;
     public ImagePrint(Context context, MsgHandle mHandle, MsgDialog mDialog) {
         super(context, mHandle, mDialog);
     }
@@ -25,12 +27,12 @@ public class ImagePrint extends BasePrint {
 //    public Bitmap getFiles() {
 //        return mText;
 //    }
-    public ArrayList<String> getFiles(){ return  null ;}
+    public ArrayList<String> getFiles(){ return null;}
     /**
      * set print data
      */
-    public void setFiles(Bitmap text,Bitmap aztec) {
-        mText = text; mAztec = aztec;
+    public void setFiles(Bitmap text,Bitmap qr) {
+        mText = text; mQr = qr;
     }
 
     /**
@@ -38,11 +40,16 @@ public class ImagePrint extends BasePrint {
      */
     @Override
     protected void doPrint() {
+        if(mText != null && mQr != null) {
+			Log.w("PRINT", "we gots them both!");
+		}
         if(mText != null) {
             mPrinter.printImage(mText);
+            Log.w("PRINT", "txt print complt");
         }
-        if(mAztec != null) {
-            mPrinter.printImage(mAztec);
+        if(mQr != null) {
+            mPrinter.printImage(mQr);
+            Log.w("PRINT", "qr print compmlt");
         }
     }
 

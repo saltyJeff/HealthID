@@ -1,9 +1,12 @@
 package org.woodbridgehigh.healthid;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,6 +37,25 @@ public class MainActivity extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
+		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.create_fab);
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(MainActivity.this, CreateActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		//permission dependent
+		if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+			withCamPerm();
+		}
+		else {
+			Log.w(TAG, "req'ing camera perm");
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 69);
+		}
+	}
+	public void withCamPerm() {
 		barcodeScannerView = (DecoratedBarcodeView)findViewById(R.id.barcode_scanner);
 		toggleFlash = (FloatingActionButton) findViewById(R.id.flash_fab);
 		if(hasFlash()) {
@@ -58,15 +80,6 @@ public class MainActivity extends AppCompatActivity {
 		else {
 			toggleFlash.hide();
 		}
-
-		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.create_fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent(MainActivity.this, CreateActivity.class);
-				startActivity(intent);
-			}
-		});
 		//barcode stuff
 		List<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE);
 		barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
@@ -83,6 +96,16 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void possibleResultPoints(List<ResultPoint> resultPoints) {}
 		});
+	}
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 69) {
+			if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				withCamPerm();
+
+			}
+		}
 	}
 	private boolean hasFlash() {
 		return getApplicationContext().getPackageManager()
