@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 		if (requestCode == 69) {
 			if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 				withCamPerm();
-
 			}
 		}
 	}

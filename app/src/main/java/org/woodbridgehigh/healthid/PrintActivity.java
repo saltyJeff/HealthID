@@ -57,19 +57,10 @@ public class PrintActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_print);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		ImageView textImgView = findViewById(R.id.text_bmp);
 		ImageView qrImgView = findViewById(R.id.qr_bmp);
 		Log.w(TAG, "entering print activity");
-		textBitmap = (Bitmap) getIntent().getParcelableExtra(JsInterface.TEXT_BMP_EXTRA);
+		textBitmap = null;
 		qrBitmap = (Bitmap) getIntent().getParcelableExtra(JsInterface.CODE_BMP_EXTRA);
-		if (textBitmap == null){
-			Snackbar.make(textImgView, "Text bitmap not found", Snackbar.LENGTH_LONG).show();
-		}
-		else {
-			textImgView.setImageBitmap(textBitmap);
-			textImgView.setScaleX(2);
-			textImgView.setScaleY(2);
-		}
 		if (qrBitmap == null){
 			Snackbar.make(qrImgView, "QR bitmap not found", Snackbar.LENGTH_LONG).show();
 		}
